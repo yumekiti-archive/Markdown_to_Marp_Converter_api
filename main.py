@@ -6,7 +6,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://marplify.yumekiti.net/"],
+    allow_origins=["https://marplify.yumekiti.net"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

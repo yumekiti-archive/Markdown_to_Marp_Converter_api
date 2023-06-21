@@ -4,7 +4,9 @@ class MarpConverter:
     @staticmethod
     def convert_to_marp(markdown_content: str) -> str:
         marp_content = "---\nmarp: true\npaginate: true\nsize: 16:9\ntheme: default\n---\n\n"
-        
+
+        code_block_started = False
+
         lines = markdown_content.split("\n")
         for line in lines:
             if line.startswith("# "):
@@ -13,6 +15,12 @@ class MarpConverter:
             elif line.startswith("## "):
                 subtitle = line[3:].strip()
                 marp_content += f'\n---\n\n<!--\n_class: general\n-->\n\n## {subtitle}\n'
+            elif line.startswith("```"):
+                if code_block_started:
+                    marp_content += line + "\n"
+                else:
+                    marp_content += "---\n" + line + "\n"
+                code_block_started = not code_block_started
             else:
                 marp_content += f"{line}\n"
 

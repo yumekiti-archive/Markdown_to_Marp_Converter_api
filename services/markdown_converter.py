@@ -46,7 +46,7 @@ class MarkdownConverter:
 
         markdown_content = "\n".join(markdown_lines)
 
-        prettier_command = "npx --yes prettier --parser=markdown --prose-wrap always --write"
+        prettier_command = "npx --yes prettier --parser=markdown --print-width 500 --prose-wrap always --write"
         formatted_content = subprocess.check_output(f"echo '{markdown_content}' | {prettier_command}", shell=True).decode("utf-8")
 
         return formatted_content

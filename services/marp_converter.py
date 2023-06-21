@@ -24,7 +24,7 @@ class MarpConverter:
             else:
                 marp_content += f"{line}\n"
 
-        prettier_command = "npx --yes prettier --parser=markdown --prose-wrap always --write"
+        prettier_command = "npx --yes prettier --parser=markdown --print-width 500 --prose-wrap always --write"
         formatted_content = subprocess.check_output(f"echo '{marp_content}' | {prettier_command}", shell=True).decode("utf-8")
 
         formatted_content = formatted_content.replace("---\n\n---\n\n", "---\n\n")

@@ -3,8 +3,8 @@ import subprocess
 class MarpConverter:
     @staticmethod
     def convert_to_marp(markdown_content: str) -> str:
-        marp_content = "---\nmarp: true\npaginate: true\nsize: 16:9"
-
+        marp_content = "---\nmarp: true\npaginate: true\nsize: 16:9\ntheme: default\n---\n\n"
+        
         lines = markdown_content.split("\n")
         for line in lines:
             if line.startswith("# "):
@@ -18,5 +18,7 @@ class MarpConverter:
 
         prettier_command = "npx --yes prettier --parser=markdown --print-width 120 --prose-wrap always --write"
         formatted_content = subprocess.check_output(f"echo '{marp_content}' | {prettier_command}", shell=True).decode("utf-8")
+
+        formatted_content = formatted_content.replace("---\n\n---\n\n", "---\n\n")
 
         return formatted_content

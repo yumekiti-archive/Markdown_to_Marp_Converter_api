@@ -1,8 +1,11 @@
 import subprocess
+import re
 
 class MarkdownConverter:
     @staticmethod
     def convert_to_markdown(marp_content: str) -> str:
+        marp_content = re.sub(r'<!--[\s\S]*?-->', '', marp_content)
+
         lines = marp_content.split("\n")
         markdown_lines = []
 

@@ -1,13 +1,16 @@
-from fastapi import APIRouter
-from controllers.markdown_controller import convert_markdown_to_marp
-from controllers.markdown_controller import convert_marp_to_markdown
-from models.markdown import Markdown
-from services.data_export import md_export
-from services.data_export import marp_export
-
 from pathlib import Path
 from datetime import datetime
+
 from fastapi.responses import FileResponse 
+from fastapi import APIRouter
+
+from controllers.markdown_controller import convert_markdown_to_marp
+from controllers.markdown_controller import convert_marp_to_markdown
+from controllers.marp_controller import get_theme
+from models.markdown import Markdown
+from models.marp import Marp
+from services.data_export import md_export
+from services.data_export import marp_export
 
 router = APIRouter()
 
@@ -50,3 +53,7 @@ def marp_to_html(marp: Markdown):
                             )
  
     return response
+
+@router.post("/style")
+def change_theme(marp: Marp):
+    return get_theme(marp.theme)

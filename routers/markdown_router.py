@@ -26,6 +26,10 @@ def markdown_to_html(markdown: Markdown):
 def marp_to_html(marp: Markdown):
     return marp_export(marp.content)
 
+@router.post("/marp-to-pdf")
+def marp_to_html(marp: Markdown):
+    return marp_export(marp.content, "pdf")
+
 @router.post("/style")
 def change_theme(marp: Marp):
     return get_theme(marp.theme)

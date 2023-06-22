@@ -20,10 +20,10 @@ def md_export(markdown_content: str):
  
     return response
 
-def marp_export(marp_content: str):
-    MarpExport.marp_export(marp_content)
+def marp_export(marp_content: str, data_format='html'):
+    MarpExport.marp_export(marp_content, data_format)
     current = Path()
-    filename = 'marp_export.html'
+    filename = f'marp_export.{data_format}'
     file_path =f'{current}/{filename}'
     
     now = datetime.now()

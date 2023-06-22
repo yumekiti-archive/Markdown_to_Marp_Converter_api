@@ -1,5 +1,6 @@
 import subprocess
 import re
+import mdformat
 
 class MarkdownConverter:
     @staticmethod
@@ -37,6 +38,12 @@ class MarkdownConverter:
             elif line.startswith("_header"):
                 # ヘッダー部分のヘッダー指定を削除します
                 continue
+            elif line.startswith("backgroundColor"):
+                # ヘッダー部分のヘッダー指定を削除します
+                continue
+            elif line.startswith("backgroundImage"):
+                # ヘッダー部分のヘッダー指定を削除します
+                continue
             elif line.strip() == "":
                 # 空行を削除します
                 continue
@@ -44,9 +51,10 @@ class MarkdownConverter:
                 # そのままの行を追加します
                 markdown_lines.append(line)
 
-        markdown_content = "\n".join(markdown_lines)
+        markdown_content = "\n\n".join(markdown_lines)
 
-        prettier_command = "npx --yes prettier --parser=markdown --print-width 500 --prose-wrap always --write"
-        formatted_content = subprocess.check_output(f"echo '{markdown_content}' | {prettier_command}", shell=True).decode("utf-8")
+        # prettier_command = "npx --yes prettier --parser=markdown --print-width 500 --prose-wrap always --write"
+        # formatted_content = subprocess.check_output(f"echo '{markdown_content}' | {prettier_command}", shell=True).decode("utf-8")
+        formatted_content = mdformat.text(markdown_content)
 
         return formatted_content

@@ -6,15 +6,17 @@ class MarpConverter:
         marp_content = "---\nmarp: true\npaginate: true\nsize: 16:9\ntheme: default\n---\n\n"
 
         code_block_started = False
+        header = ""
 
         lines = markdown_content.split("\n")
         for line in lines:
             if line.startswith("# "):
                 title = line[2:].strip()
+                header = title
                 marp_content += f'\n---\n\n<!--\n_class: headline\n-->\n\n# {title}\n'
             elif line.startswith("## "):
                 subtitle = line[3:].strip()
-                marp_content += f'\n---\n\n<!--\n_class: general\n-->\n\n## {subtitle}\n'
+                marp_content += f'\n---\n\n<!--\n_class: general\n_header: {header}\n-->\n\n## {subtitle}\n'
             elif line.startswith("```"):
                 if code_block_started:
                     marp_content += line + "\n"
@@ -28,5 +30,10 @@ class MarpConverter:
         formatted_content = subprocess.check_output(f"echo '{marp_content}' | {prettier_command}", shell=True).decode("utf-8")
 
         formatted_content = formatted_content.replace("---\n\n---\n\n", "---\n\n")
+
+        formatted_content = formatted_content.replace("。", "。<br>")
+        formatted_content = formatted_content.replace("．", "．<br>")
+        formatted_content = formatted_content.replace("？", "？<br>")
+        formatted_content = formatted_content.replace("！", "！<br>")
 
         return formatted_content

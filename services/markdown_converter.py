@@ -1,4 +1,3 @@
-import subprocess
 import re
 import mdformat
 
@@ -11,39 +10,19 @@ class MarkdownConverter:
         lines = marp_content.split("\n")
         markdown_lines = []
 
+        metadata_prefixes = ["---", "marp:", "paginate:", "theme:", "size:"]
+        comment_prefixes = ["<!--", "-->"]
+        header_prefixes = ["_class", "_header", "backgroundColor", "backgroundImage"]
+
         for line in lines:
-            if line.startswith("---"):
+            if any(line.startswith(prefix) for prefix in metadata_prefixes):
                 # ドキュメントのメタデータ部分を削除します
                 continue
-            elif line.startswith("marp:"):
-                # ドキュメントのメタデータ部分を削除します
-                continue
-            elif line.startswith("paginate:"):
-                # ドキュメントのメタデータ部分を削除します
-                continue
-            elif line.startswith("theme:"):
-                # ドキュメントのメタデータ部分を削除します
-                continue
-            elif line.startswith("size:"):
-                # ドキュメントのメタデータ部分を削除します
-                continue
-            elif line.startswith("<!--"):
+            elif any(line.startswith(prefix) for prefix in comment_prefixes):
                 # Marpのコメント部分を削除します
                 continue
-            elif line.startswith("-->"):
-                # Marpのコメント部分を削除します
-                continue
-            elif line.startswith("_class"):
-                # ヘッダー部分のクラス指定を削除します
-                continue
-            elif line.startswith("_header"):
-                # ヘッダー部分のヘッダー指定を削除します
-                continue
-            elif line.startswith("backgroundColor"):
-                # ヘッダー部分のヘッダー指定を削除します
-                continue
-            elif line.startswith("backgroundImage"):
-                # ヘッダー部分のヘッダー指定を削除します
+            elif any(line.startswith(prefix) for prefix in header_prefixes):
+                # ヘッダー部分の指定を削除します
                 continue
             elif line.strip() == "":
                 # 空行を削除します
@@ -54,8 +33,6 @@ class MarkdownConverter:
 
         markdown_content = "\n\n".join(markdown_lines)
 
-        # prettier_command = "npx --yes prettier --parser=markdown --print-width 500 --prose-wrap always --write"
-        # formatted_content = subprocess.check_output(f"echo '{markdown_content}' | {prettier_command}", shell=True).decode("utf-8")
         formatted_content = mdformat.text(markdown_content)
 
         return formatted_content

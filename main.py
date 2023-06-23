@@ -16,3 +16,4 @@ app.add_middleware(
 )
 
 app.include_router(markdown_router.router)
+app.include_router(marp_router.router)

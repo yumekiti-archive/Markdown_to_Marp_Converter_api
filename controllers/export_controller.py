@@ -13,10 +13,7 @@ def md_export(markdown_content: str):
     
     now = datetime.now()
     
-    response = FileResponse(
-                            path=file_path,
-                            filename=f"download_{now.strftime('%Y%m%d%H%M%S')}_{filename}"
-                            )
+    response = FileResponse(path=file_path, filename=f"download_{now.strftime('%Y%m%d%H%M%S')}_{filename}")
  
     return response
 
@@ -28,9 +25,6 @@ def marp_export(marp_content: str, data_format='html'):
     
     now = datetime.now()
     
-    response = FileResponse(
-                            path=file_path,
-                            filename=f"download_{now.strftime('%Y%m%d%H%M%S')}_{filename}"
-                            )
+    response = FileResponse(path=file_path, filename=f"download_{now.strftime('%Y%m%d%H%M%S')}_{filename}")
  
     return response

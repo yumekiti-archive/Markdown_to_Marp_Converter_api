@@ -4,11 +4,11 @@ import mdformat
 class MarpConverter:
     @staticmethod
     def convert_to_marp(markdown_content: str) -> str:
-        marp_content = "--- \nmarp: true\npaginate: true\nsize: 16:9\ntheme: default\n---\n\n"
+        marp_content = "--- \nmarp: true\npaginate: true\nsize: 16:9\ntheme: default\n---\n"
 
         code_block_started = False
         header = ""
-        
+
         formatted_markdown_content = mdformat.text(markdown_content)
 
         lines = formatted_markdown_content.split("\n")

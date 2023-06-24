@@ -11,7 +11,7 @@ def create_table():
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     cursor.execute(
-        "CREATE TABLE IF NOT EXISTS posts (uuid TEXT PRIMARY KEY, content TEXT, style TEXT, created_at TEXT, updated_at TEXT)"
+        "CREATE TABLE IF NOT EXISTS posts (uuid TEXT, content TEXT, style TEXT, created_at TEXT, updated_at TEXT)"
     )
     conn.commit()
     conn.close()

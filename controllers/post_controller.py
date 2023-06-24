@@ -1,5 +1,7 @@
 from models.post import Post
 from models.marp import Marp
+from datetime import datetime
+import pytz
 
 class PostController:
     def create_post(self, uuid: str, marp: Marp):
@@ -9,7 +11,11 @@ class PostController:
 
     def get_post(self, uuid: str):
         post = Post.get_by_uuid(uuid)
-        if post:
-            return {"content": post.content, "style": post.style}
+        now = datetime.now(pytz.timezone("Asia/Tokyo")).strftime("%Y-%m-%d %H:%M:%S")
+        # 30分前までの投稿のみ有効
+        if post and (datetime.strptime(now, "%Y-%m-%d %H:%M:%S") - datetime.strptime(post.created_at, "%Y-%m-%d %H:%M:%S")).total_seconds() < 60 * 30:
+            return {"content": post.content, "style": post.style, "created_at": post.created_at}
+        elif post:
+            return {"message": "Post expired"}
         else:
             raise HTTPException(status_code=404, detail="Post not found")

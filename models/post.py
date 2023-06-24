@@ -1,5 +1,6 @@
 import sqlite3
 from datetime import datetime
+import pytz
 
 DB_PATH = "database.db"
 
@@ -8,8 +9,8 @@ class Post:
         self.uuid = uuid
         self.content = content
         self.style = style
-        self.created_at = created_at or datetime.now().isoformat()
-        self.updated_at = updated_at or datetime.now().isoformat()
+        self.created_at = created_at or datetime.now(pytz.timezone("Asia/Tokyo")).strftime("%Y-%m-%d %H:%M:%S")
+        self.updated_at = updated_at or datetime.now(pytz.timezone("Asia/Tokyo")).strftime("%Y-%m-%d %H:%M:%S")
 
     def save(self):
         conn = sqlite3.connect(DB_PATH)
@@ -26,12 +27,12 @@ class Post:
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
         cursor.execute(
-            "SELECT content, style FROM posts WHERE uuid=?",
+            "SELECT content, style, created_at FROM posts WHERE uuid=?",
             (uuid,)
         )
         result = cursor.fetchone()
         conn.close()
         if result:
-            return Post(uuid=uuid, content=result[0], style=result[1])
+            return Post(uuid=uuid, content=result[0], style=result[1], created_at=result[2])
         else:
             return None

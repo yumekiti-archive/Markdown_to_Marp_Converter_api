@@ -37,7 +37,7 @@ class MarkdownConverter:
 
         formatted_content = '\n'.join([line for line in formatted_content.splitlines() if line.strip()])
         
-        indention_prefixes = ["#", "## ", "### ", "#### ", "##### ", "###### "]
+        indention_prefixes = ["# ", "## ", "### ", "#### ", "##### ", "###### "]
 
         lines = formatted_content.split("\n")
         for line in lines:

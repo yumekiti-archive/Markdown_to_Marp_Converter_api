@@ -1,4 +1,5 @@
 from pydantic import BaseModel
 
 class Marp(BaseModel):
-    theme: str
+    content: str
+    style: str

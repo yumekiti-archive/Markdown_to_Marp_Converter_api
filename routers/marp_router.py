@@ -5,7 +5,7 @@ from controllers.markdown_controller import convert_markdown_to_marp
 from controllers.marp_controller import get_theme
 from controllers.export_controller import md_export, marp_export
 from models.markdown import Markdown
-from models.marp import Marp
+from models.theme import Theme
 
 router = APIRouter()
 
@@ -18,9 +18,9 @@ def marp_to_html(marp: Markdown):
     return marp_export(marp.content)
 
 @router.post("/marp-to-pdf")
-def marp_to_html(marp: Markdown):
+def marp_to_pdf(marp: Markdown):
     return marp_export(marp.content, "pdf")
 
 @router.post("/style")
-def change_theme(marp: Marp):
+def change_theme(marp: Theme):
     return get_theme(marp.theme)

@@ -27,7 +27,7 @@ class Post:
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
         cursor.execute(
-            "SELECT content, style, created_at FROM posts WHERE uuid=? ORDER BY created_at DESC",
+            "SELECT content, style, created_at FROM posts WHERE uuid=?",
             (uuid,)
         )
         result = cursor.fetchone()
@@ -36,3 +36,25 @@ class Post:
             return Post(uuid=uuid, content=result[0], style=result[1], created_at=result[2])
         else:
             return None
+
+    @staticmethod
+    def get_all():
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        cursor.execute(
+            "SELECT uuid, content, style, created_at FROM posts"
+        )
+        results = cursor.fetchall()
+        conn.close()
+        return [Post(uuid=result[0], content=result[1], style=result[2], created_at=result[3]) for result in results]
+
+    @staticmethod
+    def delete_by_uuid(uuid: str):
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        cursor.execute(
+            "DELETE FROM posts WHERE uuid=?",
+            (uuid,)
+        )
+        conn.commit()
+        conn.close()

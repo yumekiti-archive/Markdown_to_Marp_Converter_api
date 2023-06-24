@@ -5,6 +5,7 @@ import pytz
 
 class PostController:
     def create_post(self, uuid: str, marp: Marp):
+        Post.delete_by_uuid(uuid)
         post = Post(uuid=uuid, content=marp.content, style=marp.style)
         post.save()
         return {"message": "Post created successfully"}
@@ -12,7 +13,7 @@ class PostController:
     def get_post(self, uuid: str):
         post = Post.get_by_uuid(uuid)
         now = datetime.now(pytz.timezone("Asia/Tokyo")).strftime("%Y-%m-%d %H:%M:%S")
-        # 30分前までの投稿のみ有効
+
         if post and (datetime.strptime(now, "%Y-%m-%d %H:%M:%S") - datetime.strptime(post.created_at, "%Y-%m-%d %H:%M:%S")).total_seconds() < 60 * 30:
             return {"content": post.content, "style": post.style, "created_at": post.created_at}
         elif post:

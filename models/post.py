@@ -27,7 +27,7 @@ class Post:
         conn = sqlite3.connect(DB_PATH)
         cursor = conn.cursor()
         cursor.execute(
-            "SELECT content, style, created_at FROM posts WHERE uuid=?",
+            "SELECT content, style, created_at FROM posts WHERE uuid=? ORDER BY created_at DESC",
             (uuid,)
         )
         result = cursor.fetchone()

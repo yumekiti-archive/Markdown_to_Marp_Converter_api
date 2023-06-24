@@ -34,13 +34,4 @@ class MarpConverter:
         marp_content = marp_content.replace("？", "？<br>")
         marp_content = marp_content.replace("！", "！<br>")
 
-        marp_content = '\n'.join([line for line in formatted_content.splitlines() if line.strip()])
-        
-        indention_prefixes = ["# ", "## ", "### ", "#### ", "##### ", "###### "]
-
-        lines = marp_content.split("\n")
-        for line in lines:
-            if any(line.startswith(prefix) for prefix in indention_prefixes):
-                marp_content = marp_content.replace(line, "\n" + line)
-
         return marp_content

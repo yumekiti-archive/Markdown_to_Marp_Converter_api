@@ -20,3 +20,7 @@ class PostController:
             return {"message": "Post expired"}
         else:
             raise HTTPException(status_code=404, detail="Post not found")
+
+    def get_posts(self):
+        posts = Post.get_all()
+        return posts

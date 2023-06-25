@@ -12,3 +12,7 @@ def create_post(uuid: str, marp: Marp):
 @router.get("/share/{uuid}")
 def get_post(uuid: str):
     return post_controller.get_post(uuid)
+
+@router.get("/share")
+def get_posts():
+    return post_controller.get_posts()
